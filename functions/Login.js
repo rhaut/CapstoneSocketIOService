@@ -1,7 +1,9 @@
 var Login = function (database, socket, setId, username, password) {
 
+    //TODO Need to generate real tokens
     var token = new Date().getTime();
 
+    //Sets the token for the user that logs in.
     database.User.update({
             token: token
         },{
@@ -10,6 +12,7 @@ var Login = function (database, socket, setId, username, password) {
                 password: password
     }}).then(success, failure);
 
+    //If successful then calls setId and returns the result to the user.
     function success(count) {
         console.log(count[0]);
         if(count[0] > 0) {
@@ -20,11 +23,13 @@ var Login = function (database, socket, setId, username, password) {
         }
     }
 
+    //Returns the unsuccessful result to the user.
     function failure(error) {
         console.log(error);
         loginResult(false, "Server Error");
     }
 
+    //Logs and emits the result to the user.
     function loginResult(success, message, username, token) {
         console.log("Success: " + success);
         console.log("Message: " + message);

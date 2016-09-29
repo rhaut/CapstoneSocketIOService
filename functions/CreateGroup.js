@@ -1,5 +1,7 @@
 var CreateGroup = function (database, socket, userId, name) {
 
+    //Create a transaction that tries to create a group and an initial subgroup
+    //with the specified information then calls createGroupResult.
     database.sequelize.transaction(function (t) {
         return database.Group.create({
             ownerId: userId,
@@ -19,6 +21,7 @@ var CreateGroup = function (database, socket, userId, name) {
         createGroupResult(false, "Failed To Create Group");
     });
 
+    //Log and emit the result of create_group to the requester
     function createGroupResult(success, message, groupId) {
         console.log("Success: " + success);
         console.log("Message: " + message);

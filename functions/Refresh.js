@@ -1,7 +1,9 @@
 var Refresh = function (database, socket, setId, username, token) {
 
+    //Sets a new token for the user.
     database.User.update(
         {
+            //TODO Generate a real token
             token: "123456"
         },
         {
@@ -12,6 +14,7 @@ var Refresh = function (database, socket, setId, username, token) {
         }
     ).then(success, failure);
 
+    //If successful the calls setId and returns the result to the user.
     function success(count) {
         console.log(count[0]);
         if(count[0] > 0) {
@@ -22,11 +25,13 @@ var Refresh = function (database, socket, setId, username, token) {
         }
     }
 
+    //Returns the unsuccessful result to the user.
     function failure(error) {
         console.log(error);
         refreshResult(false, "Server Error");
     }
 
+    //Logs and returns the result to the user.
     function refreshResult(success, message, username, token) {
         console.log("Success: " + success);
         console.log("Message: " + message);

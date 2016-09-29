@@ -2,8 +2,10 @@ var app = require('express')();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
+//Holds all data types
 var database = require("./models/Database");
 
+//All functions that can be called
 var register = require("./functions/Register");
 var login = require("./functions/Login");
 var refresh = require("./functions/Refresh");
@@ -13,8 +15,10 @@ var joinSubgroup = require("./functions/JoinSubgroup");
 var leaveSubgroup = require("./functions/LeaveSubgroup");
 var getGroups = require("./functions/GetGroups");
 
+//Holds the authenticated users socketIds and userIds
 global.authenticated = {};
 
+//Associates the socketId with the userId to hold the session.
 function setId(database, username, socketId) {
 
     database.User.findOne({
@@ -38,14 +42,17 @@ function setId(database, username, socketId) {
     }
 }
 
+//Deletes the session
 function removeId(socketId) {
     delete global.authenticated[socketId];
 }
 
+//Gets the userId associated with the socketId
 function getId(socketId) {
     return global.authenticated[socketId];
 }
 
+//Connection handler.  Logs the socketId and calls the appropriate function that was requested
 io.on('connection', function (socket) {
     console.log("Connection: " + socket.id);
     socket.on('disconnect', function () {
@@ -88,6 +95,7 @@ io.on('connection', function (socket) {
     })
 });
 
+//Synchronizes and starts the server.
 database.sequelize.sync().then(function () {
     console.log("Starting Server...");
     server.listen(3000);

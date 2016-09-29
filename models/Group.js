@@ -1,4 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
+
+    //Set the properties of the Group model
     var Group = sequelize.define('group', {
         name: {
             type: DataTypes.STRING,
@@ -8,6 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         freezeTableName: true,
         classMethods: {
+            //Add function to set the type of associations to make
             associate: function (models) {
                 Group.belongsTo(models.User, {
                     as: 'owner',

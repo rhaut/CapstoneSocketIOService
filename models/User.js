@@ -1,4 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
+
+    //Set the properties of the User model
     return sequelize.define('user', {
         username: {
             type: DataTypes.STRING,
@@ -13,6 +15,6 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING
         }
     }, {
-        freezeTableName: true // Model tableName will be the same as the model name
+        freezeTableName: true
     });
 };

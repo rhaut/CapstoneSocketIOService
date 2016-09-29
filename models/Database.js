@@ -9,6 +9,7 @@ var sequelize = new Sequelize('test', '', '', {
         idle: 10000
     }
 });
+
 var db = {
     User: require("./User")(sequelize, Sequelize),
     Group: require("./Group")(sequelize, Sequelize),
